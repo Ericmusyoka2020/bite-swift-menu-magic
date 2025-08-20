@@ -8,35 +8,51 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* BiteSwift Design System - Warm, appetizing colors */
+    --background: 28 100% 99%;
+    --foreground: 20 14.3% 4.1%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 28 100% 99%;
+    --card-foreground: 20 14.3% 4.1%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 28 100% 99%;
+    --popover-foreground: 20 14.3% 4.1%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary: Warm orange/amber for food ordering */
+    --primary: 24 94% 53%;
+    --primary-foreground: 28 100% 99%;
+    --primary-glow: 32 98% 83%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary: Elegant warm neutral */
+    --secondary: 20 14.3% 95.1%;
+    --secondary-foreground: 24 9.8% 10%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 20 14.3% 95.1%;
+    --muted-foreground: 25 5.3% 44.7%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 32 94% 65%;
+    --accent-foreground: 28 100% 99%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 28 100% 99%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 24 94% 53%;
 
-    --radius: 0.5rem;
+    /* Beautiful gradients for BiteSwift */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-hero: linear-gradient(135deg, hsl(24 94% 53%), hsl(32 94% 65%));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(20 14.3% 95.1%));
+    
+    /* Shadows with brand color */
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.3);
+    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.4);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,33 +72,43 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* Dark mode for evening dining ambiance */
+    --background: 20 14.3% 4.1%;
+    --foreground: 28 100% 99%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 28 100% 99%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 28 100% 99%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 32 94% 65%;
+    --primary-foreground: 20 14.3% 4.1%;
+    --primary-glow: 32 98% 83%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 28 100% 99%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 24 94% 53%;
+    --accent-foreground: 20 14.3% 4.1%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 28 100% 99%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 32 94% 65%;
+
+    /* Dark mode gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-hero: linear-gradient(135deg, hsl(32 94% 65%), hsl(24 94% 53%));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(12 6.5% 15.1%));
+    
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.4);
+    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.3);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -100,6 +126,43 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* RTL Support for Arabic and Hebrew */
+  [dir="rtl"] {
+    text-align: right;
+  }
+  
+  [dir="rtl"] .rtl-flip {
+    transform: scaleX(-1);
+  }
+  
+  /* Smooth animations for all elements */
+  * {
+    transition: var(--transition-smooth);
+  }
+  
+  /* Beautiful gradients */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .gradient-subtle {
+    background: var(--gradient-subtle);
+  }
+  
+  /* Elegant shadows */
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
   }
 }
