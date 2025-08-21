@@ -381,6 +381,28 @@ export const translations: Translations = {
     fr: "Disponible en 9 langues avec prise en charge complète RTL",
     es: "Disponible en 9 idiomas con soporte completo RTL",
     de: "Verfügbar in 9 Sprachen mit vollständiger RTL-Unterstützung"
+  },
+  required: {
+    en: 'Required',
+    he: 'נדרש',
+    ar: 'مطلوب',
+    ru: 'Обязательно',
+    yi: 'פאַרלאַנגט',
+    am: 'ያስፈልጋል',
+    fr: 'Obligatoire',
+    es: 'Requerido',
+    de: 'Erforderlich'
+  },
+  customize: {
+    en: 'Customize',
+    he: 'התאמה אישית',
+    ar: 'تخصيص',
+    ru: 'Настроить',
+    yi: 'קאַסטאַמייז',
+    am: 'ባህሪያት ይቀይሩ',
+    fr: 'Personnaliser',
+    es: 'Personalizar',
+    de: 'Anpassen'
   }
 };
 

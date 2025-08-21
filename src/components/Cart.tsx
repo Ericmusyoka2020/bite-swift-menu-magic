@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, Minus, Plus, X, CreditCard } from 'lucide-react';
+import { ShoppingCart, Minus, Plus, X, CreditCard, Trash2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
@@ -15,7 +15,7 @@ interface CartProps {
 }
 
 export const Cart: React.FC<CartProps> = ({ isOpen, onToggle }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { items, updateQuantity, removeItem, total, itemCount } = useCart();
   const [showCheckout, setShowCheckout] = useState(false);
 
@@ -76,61 +76,100 @@ export const Cart: React.FC<CartProps> = ({ isOpen, onToggle }) => {
                   <>
                     <div className="flex-1 overflow-y-auto space-y-4">
                       <AnimatePresence>
-                        {items.map((cartItem) => (
-                          <motion.div
-                            key={cartItem.item.id}
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="border rounded-lg p-4 space-y-3"
-                          >
-                            <div className="flex justify-between items-start">
-                              <div className="flex-1">
-                                <h4 className="font-medium text-sm">
-                                  {cartItem.item.name[useLanguage().language]}
+                        {items.map((cartItem, index) => {
+                          // Calculate item price with customizations
+                          let itemPrice = cartItem.item.price;
+                          if (cartItem.customizations && cartItem.item.customizations) {
+                            cartItem.item.customizations.forEach(customization => {
+                              const selectedOptionId = cartItem.customizations![customization.id];
+                              if (selectedOptionId) {
+                                const option = customization.options.find(opt => opt.id === selectedOptionId);
+                                if (option?.price) {
+                                  itemPrice += option.price;
+                                }
+                              }
+                            });
+                          }
+
+                          return (
+                            <motion.div
+                              key={`${cartItem.item.id}-${index}`}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              exit={{ opacity: 0, x: 20 }}
+                              className="flex items-start gap-3 p-3 bg-card rounded-lg border"
+                            >
+                              <img
+                                src={cartItem.item.image}
+                                alt={cartItem.item.name[language]}
+                                className="w-12 h-12 object-cover rounded"
+                              />
+                              
+                              <div className="flex-1 min-w-0 space-y-1">
+                                <h4 className="font-medium text-sm text-foreground truncate">
+                                  {cartItem.item.name[language]}
                                 </h4>
-                                <p className="text-primary font-semibold">
-                                  ${cartItem.item.price}
+                                
+                                {/* Show customizations */}
+                                {cartItem.customizations && cartItem.item.customizations && (
+                                  <div className="space-y-1">
+                                    {cartItem.item.customizations.map(customization => {
+                                      const selectedOptionId = cartItem.customizations![customization.id];
+                                      if (!selectedOptionId) return null;
+                                      
+                                      const option = customization.options.find(opt => opt.id === selectedOptionId);
+                                      if (!option) return null;
+                                      
+                                      return (
+                                        <p key={customization.id} className="text-xs text-muted-foreground">
+                                          {customization.name[language]}: {option.name[language]}
+                                          {option.price && ` (+$${option.price})`}
+                                        </p>
+                                      );
+                                    })}
+                                  </div>
+                                )}
+                                
+                                <p className="text-xs text-muted-foreground">
+                                  ${itemPrice}
                                 </p>
                               </div>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => removeItem(cartItem.item.id)}
-                                className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
-                              >
-                                <X className="h-3 w-3" />
-                              </Button>
-                            </div>
-                            
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
+                              
+                              <div className="flex items-center gap-1">
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => updateQuantity(cartItem.item.id, cartItem.quantity - 1)}
-                                  className="h-8 w-8 p-0"
+                                  onClick={() => updateQuantity(index, cartItem.quantity - 1)}
+                                  className="h-6 w-6 p-0"
                                 >
                                   <Minus className="h-3 w-3" />
                                 </Button>
-                                <span className="w-8 text-center font-medium">
+                                
+                                <span className="w-8 text-center text-sm font-medium">
                                   {cartItem.quantity}
                                 </span>
+                                
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => updateQuantity(cartItem.item.id, cartItem.quantity + 1)}
-                                  className="h-8 w-8 p-0"
+                                  onClick={() => updateQuantity(index, cartItem.quantity + 1)}
+                                  className="h-6 w-6 p-0"
                                 >
                                   <Plus className="h-3 w-3" />
                                 </Button>
+                                
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => removeItem(index)}
+                                  className="h-6 w-6 p-0 ml-1 text-destructive hover:text-destructive"
+                                >
+                                  <Trash2 className="h-3 w-3" />
+                                </Button>
                               </div>
-                              <span className="font-semibold">
-                                ${(cartItem.item.price * cartItem.quantity).toFixed(2)}
-                              </span>
-                            </div>
-                          </motion.div>
-                        ))}
+                            </motion.div>
+                          );
+                        })}
                       </AnimatePresence>
                     </div>
                     

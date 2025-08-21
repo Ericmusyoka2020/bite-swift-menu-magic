@@ -9,6 +9,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { useCart } from '../contexts/CartContext';
 import { menuItems } from '../data/menuItems';
 import { MenuItem } from '../types';
+import { ItemCustomizationModal } from './ItemCustomizationModal';
 
 const categories = ['starters', 'mainCourse', 'drinks', 'desserts'];
 
@@ -19,6 +20,8 @@ export const MenuSection: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showVegetarian, setShowVegetarian] = useState(false);
   const [showSpicy, setShowSpicy] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
+  const [showCustomization, setShowCustomization] = useState(false);
 
   const filteredItems = menuItems.filter((item) => {
     const matchesCategory = item.category === selectedCategory;
@@ -31,8 +34,17 @@ export const MenuSection: React.FC = () => {
     return matchesCategory && matchesSearch && matchesVegetarian && matchesSpicy;
   });
 
-  const handleAddToCart = (item: MenuItem) => {
-    addItem(item);
+  const handleAddToCart = (item: MenuItem, customizations?: Record<string, string>) => {
+    addItem(item, customizations);
+  };
+
+  const handleItemClick = (item: MenuItem) => {
+    if (item.customizations && item.customizations.length > 0) {
+      setSelectedItem(item);
+      setShowCustomization(true);
+    } else {
+      handleAddToCart(item);
+    }
   };
 
   return (
@@ -146,12 +158,15 @@ export const MenuSection: React.FC = () => {
                     
                     <motion.div whileTap={{ scale: 0.95 }}>
                       <Button
-                        onClick={() => handleAddToCart(item)}
+                        onClick={() => handleItemClick(item)}
                         className="w-full gap-2 gradient-hero"
                         size="lg"
                       >
                         <Plus className="h-4 w-4" />
-                        {t('addToCart')}
+                        {item.customizations && item.customizations.length > 0 
+                          ? t('customize') 
+                          : t('addToCart')
+                        }
                       </Button>
                     </motion.div>
                   </div>
@@ -168,6 +183,19 @@ export const MenuSection: React.FC = () => {
             {t('noItemsFound')}
           </p>
         </div>
+      )}
+
+      {/* Customization Modal */}
+      {selectedItem && (
+        <ItemCustomizationModal
+          item={selectedItem}
+          isOpen={showCustomization}
+          onClose={() => {
+            setShowCustomization(false);
+            setSelectedItem(null);
+          }}
+          onAddToCart={handleAddToCart}
+        />
       )}
     </section>
   );

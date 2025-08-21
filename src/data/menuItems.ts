@@ -126,15 +126,15 @@ export const menuItems: MenuItem[] = [
   {
     id: 'drink-1',
     name: {
-      en: 'Craft Cocktail Selection',
-      he: 'מבחר קוקטיילים מיוחדים',
-      ar: 'مجموعة مختارة من الكوكتيلات المصنوعة يدوياً',
-      ru: 'Авторские коктейли',
-      yi: 'קראַפט קאָקטיי אויסוואל',
-      am: 'የእጅ ስራ ኮክቴል ምርጫ',
-      fr: 'Sélection de cocktails artisanaux',
-      es: 'Selección de cócteles artesanales',
-      de: 'Handwerks-Cocktail-Auswahl'
+      en: 'Craft Cocktail',
+      he: 'קוקטייל מיוחד',
+      ar: 'كوكتيل مصنوع يدوياً',
+      ru: 'Авторский коктейль',
+      yi: 'קראַפט קאָקטיי',
+      am: 'የእጅ ስራ ኮክቴል',
+      fr: 'Cocktail artisanal',
+      es: 'Cóctel artesanal',
+      de: 'Handwerks-Cocktail'
     },
     description: {
       en: 'House-made cocktails with premium spirits and fresh ingredients',
@@ -150,7 +150,221 @@ export const menuItems: MenuItem[] = [
     price: 16,
     image: '/src/assets/drinks.jpg',
     category: 'drinks',
-    dietary: []
+    subcategory: 'alcoholic',
+    dietary: [],
+    customizations: [
+      {
+        id: 'cocktail-type',
+        name: {
+          en: 'Choose Cocktail',
+          he: 'בחר קוקטייל',
+          ar: 'اختر الكوكتيل',
+          ru: 'Выберите коктейль',
+          yi: 'אויסקלייַבן קאָקטיי',
+          am: 'ኮክቴል ይምረጡ',
+          fr: 'Choisir le cocktail',
+          es: 'Elegir cóctel',
+          de: 'Cocktail wählen'
+        },
+        required: true,
+        options: [
+          {
+            id: 'mojito',
+            name: {
+              en: 'Mojito',
+              he: 'מוחיטו',
+              ar: 'موهيتو',
+              ru: 'Мохито',
+              yi: 'מאָדזשיטאָ',
+              am: 'ሞሂቶ',
+              fr: 'Mojito',
+              es: 'Mojito',
+              de: 'Mojito'
+            }
+          },
+          {
+            id: 'margarita',
+            name: {
+              en: 'Margarita',
+              he: 'מרגריטה',
+              ar: 'مارغاريتا',
+              ru: 'Маргарита',
+              yi: 'מאַרגאַריטאַ',
+              am: 'ማርጋሪታ',
+              fr: 'Margarita',
+              es: 'Margarita',
+              de: 'Margarita'
+            }
+          },
+          {
+            id: 'whiskey-sour',
+            name: {
+              en: 'Whiskey Sour',
+              he: 'וויסקי חמוץ',
+              ar: 'ويسكي حامض',
+              ru: 'Виски сауэр',
+              yi: 'וויסקי זויער',
+              am: 'ዊስኪ ሳወር',
+              fr: 'Whiskey Sour',
+              es: 'Whiskey Sour',
+              de: 'Whiskey Sour'
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'drink-2',
+    name: {
+      en: 'Hot Beverage',
+      he: 'משקה חם',
+      ar: 'مشروب ساخن',
+      ru: 'Горячий напиток',
+      yi: 'הייס געטראַנק',
+      am: 'ሞቃት መጠጥ',
+      fr: 'Boisson chaude',
+      es: 'Bebida caliente',
+      de: 'Heißgetränk'
+    },
+    description: {
+      en: 'Premium coffee and tea selections',
+      he: 'מבחר קפה ותה איכותי',
+      ar: 'مجموعة مختارة من القهوة والشاي المتميز',
+      ru: 'Премиальный выбор кофе и чая',
+      yi: 'פּרעמיום קאָפע און טיי סעלעקציעס',
+      am: 'የከፍተኛ ጥራት ቡና እና ሻይ ምርጫዎች',
+      fr: 'Sélections de café et thé premium',
+      es: 'Selecciones premium de café y té',
+      de: 'Premium-Auswahl an Kaffee und Tee'
+    },
+    price: 8,
+    image: '/src/assets/drinks.jpg',
+    category: 'drinks',
+    subcategory: 'hot',
+    dietary: [],
+    customizations: [
+      {
+        id: 'beverage-type',
+        name: {
+          en: 'Choose Beverage',
+          he: 'בחר משקה',
+          ar: 'اختر المشروب',
+          ru: 'Выберите напиток',
+          yi: 'אויסקלייַבן געטראַנק',
+          am: 'መጠጥ ይምረጡ',
+          fr: 'Choisir la boisson',
+          es: 'Elegir bebida',
+          de: 'Getränk wählen'
+        },
+        required: true,
+        options: [
+          {
+            id: 'espresso',
+            name: {
+              en: 'Espresso',
+              he: 'אספרסו',
+              ar: 'إسبريسو',
+              ru: 'Эспрессо',
+              yi: 'עספּרעסאָ',
+              am: 'ኤስፕሬሶ',
+              fr: 'Espresso',
+              es: 'Espresso',
+              de: 'Espresso'
+            }
+          },
+          {
+            id: 'cappuccino',
+            name: {
+              en: 'Cappuccino',
+              he: 'קפוצ\'ינו',
+              ar: 'كابتشينو',
+              ru: 'Капучино',
+              yi: 'קאַפּוטשינאָ',
+              am: 'ካፑቺኖ',
+              fr: 'Cappuccino',
+              es: 'Cappuccino',
+              de: 'Cappuccino'
+            }
+          },
+          {
+            id: 'green-tea',
+            name: {
+              en: 'Green Tea',
+              he: 'תה ירוק',
+              ar: 'شاي أخضر',
+              ru: 'Зеленый чай',
+              yi: 'גרין טיי',
+              am: 'አረንጓዴ ሻይ',
+              fr: 'Thé vert',
+              es: 'Té verde',
+              de: 'Grüner Tee'
+            }
+          }
+        ]
+      },
+      {
+        id: 'milk-type',
+        name: {
+          en: 'Milk Option',
+          he: 'סוג חלב',
+          ar: 'خيار الحليب',
+          ru: 'Вариант молока',
+          yi: 'מילך אָפּציע',
+          am: 'የወተት አማራጭ',
+          fr: 'Option de lait',
+          es: 'Opción de leche',
+          de: 'Milch-Option'
+        },
+        required: false,
+        options: [
+          {
+            id: 'regular',
+            name: {
+              en: 'Regular Milk',
+              he: 'חלב רגיל',
+              ar: 'حليب عادي',
+              ru: 'Обычное молоко',
+              yi: 'רעגולער מילך',
+              am: 'መደበኛ ወተት',
+              fr: 'Lait ordinaire',
+              es: 'Leche normal',
+              de: 'Normale Milch'
+            }
+          },
+          {
+            id: 'oat',
+            name: {
+              en: 'Oat Milk',
+              he: 'חלב שיבולת שועל',
+              ar: 'حليب الشوفان',
+              ru: 'Овсяное молоко',
+              yi: 'האָבער מילך',
+              am: 'የአዅል ወተት',
+              fr: 'Lait d\'avoine',
+              es: 'Leche de avena',
+              de: 'Hafermilch'
+            },
+            price: 2
+          },
+          {
+            id: 'almond',
+            name: {
+              en: 'Almond Milk',
+              he: 'חלב שקדים',
+              ar: 'حليب اللوز',
+              ru: 'Миндальное молоко',
+              yi: 'מאַנדל מילך',
+              am: 'የሎዝ ወተት',
+              fr: 'Lait d\'amande',
+              es: 'Leche de almendra',
+              de: 'Mandelmilch'
+            },
+            price: 2
+          }
+        ]
+      }
+    ]
   },
 
   // Desserts

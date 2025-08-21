@@ -3,9 +3,9 @@ import { CartItem, MenuItem } from '../types';
 
 interface CartContextType {
   items: CartItem[];
-  addItem: (item: MenuItem) => void;
-  removeItem: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
+  addItem: (item: MenuItem, customizations?: Record<string, string>) => void;
+  removeItem: (cartItemIndex: number) => void;
+  updateQuantity: (cartItemIndex: number, quantity: number) => void;
   clearCart: () => void;
   total: number;
   itemCount: number;
@@ -24,32 +24,39 @@ export const useCart = () => {
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [items, setItems] = useState<CartItem[]>([]);
 
-  const addItem = (item: MenuItem) => {
+  const addItem = (item: MenuItem, customizations?: Record<string, string>) => {
     setItems((prevItems) => {
-      const existingItem = prevItems.find((cartItem) => cartItem.item.id === item.id);
+      // Create a unique key for the item with its customizations
+      const customizationKey = customizations ? JSON.stringify(customizations) : '';
+      const existingItem = prevItems.find((cartItem) => 
+        cartItem.item.id === item.id && 
+        JSON.stringify(cartItem.customizations || {}) === customizationKey
+      );
+      
       if (existingItem) {
         return prevItems.map((cartItem) =>
-          cartItem.item.id === item.id
+          cartItem.item.id === item.id && 
+          JSON.stringify(cartItem.customizations || {}) === customizationKey
             ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem
         );
       }
-      return [...prevItems, { item, quantity: 1 }];
+      return [...prevItems, { item, quantity: 1, customizations: customizations || {} }];
     });
   };
 
-  const removeItem = (id: string) => {
-    setItems((prevItems) => prevItems.filter((item) => item.item.id !== id));
+  const removeItem = (cartItemIndex: number) => {
+    setItems((prevItems) => prevItems.filter((_, index) => index !== cartItemIndex));
   };
 
-  const updateQuantity = (id: string, quantity: number) => {
+  const updateQuantity = (cartItemIndex: number, quantity: number) => {
     if (quantity <= 0) {
-      removeItem(id);
+      removeItem(cartItemIndex);
       return;
     }
     setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.item.id === id ? { ...item, quantity } : item
+      prevItems.map((item, index) =>
+        index === cartItemIndex ? { ...item, quantity } : item
       )
     );
   };
@@ -58,7 +65,24 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setItems([]);
   };
 
-  const total = items.reduce((sum, item) => sum + item.item.price * item.quantity, 0);
+  const total = items.reduce((sum, cartItem) => {
+    let itemPrice = cartItem.item.price;
+    
+    // Add customization prices
+    if (cartItem.customizations && cartItem.item.customizations) {
+      cartItem.item.customizations.forEach(customization => {
+        const selectedOptionId = cartItem.customizations![customization.id];
+        if (selectedOptionId) {
+          const option = customization.options.find(opt => opt.id === selectedOptionId);
+          if (option?.price) {
+            itemPrice += option.price;
+          }
+        }
+      });
+    }
+    
+    return sum + itemPrice * cartItem.quantity;
+  }, 0);
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
