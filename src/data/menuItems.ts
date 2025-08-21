@@ -27,7 +27,7 @@ export const menuItems: MenuItem[] = [
       de: 'Hummus, Oliven, Fetakäse und warmes Pita-Brot'
     },
     price: 18,
-    image: '/src/assets/appetizers.jpg',
+    image: '/appetizers.jpg',
     category: 'starters',
     dietary: ['vegetarian']
   },
@@ -56,7 +56,7 @@ export const menuItems: MenuItem[] = [
       de: 'Knusprige Risotto-Bällchen mit Trüffelöl und Parmesan'
     },
     price: 24,
-    image: '/src/assets/appetizers.jpg',
+    image: '/appetizers.jpg',
     category: 'starters',
     dietary: ['vegetarian']
   },
@@ -87,7 +87,7 @@ export const menuItems: MenuItem[] = [
       de: 'Frischer Atlantik-Lachs mit Saisongemüse und Zitronenbutter'
     },
     price: 32,
-    image: '/src/assets/main-course.jpg',
+    image: '/main-course.jpg',
     category: 'mainCourse',
     dietary: []
   },
@@ -116,7 +116,7 @@ export const menuItems: MenuItem[] = [
       de: 'Premium-Schnitt mit Trüffel-Kartoffelpüree und Rotwein-Jus'
     },
     price: 45,
-    image: '/src/assets/main-course.jpg',
+    image: '/main-course.jpg',
     category: 'mainCourse',
     dietary: [],
     spicy: false
@@ -148,7 +148,7 @@ export const menuItems: MenuItem[] = [
       de: 'Hausgemachte Cocktails mit Premium-Spirituosen und frischen Zutaten'
     },
     price: 16,
-    image: '/src/assets/drinks.jpg',
+    image: '/drinks.jpg',
     category: 'drinks',
     subcategory: 'alcoholic',
     dietary: [],
@@ -239,7 +239,7 @@ export const menuItems: MenuItem[] = [
       de: 'Premium-Auswahl an Kaffee und Tee'
     },
     price: 8,
-    image: '/src/assets/drinks.jpg',
+    image: '/drinks.jpg',
     category: 'drinks',
     subcategory: 'hot',
     dietary: [],
@@ -393,7 +393,7 @@ export const menuItems: MenuItem[] = [
       de: 'Warmer Schokoladenkuchen mit geschmolzenem Kern, Vanilleeis'
     },
     price: 14,
-    image: '/src/assets/desserts.jpg',
+    image: '/desserts.jpg',
     category: 'desserts',
     dietary: ['vegetarian']
   }

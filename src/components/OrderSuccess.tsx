@@ -5,11 +5,19 @@ import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { useLanguage } from '../contexts/LanguageContext';
 
-export const OrderSuccess: React.FC = () => {
+interface OrderSuccessProps {
+  onStartNewOrder?: () => void;
+}
+
+export const OrderSuccess: React.FC<OrderSuccessProps> = ({ onStartNewOrder }) => {
   const { t } = useLanguage();
 
   const handleBackToMenu = () => {
-    window.location.reload();
+    if (onStartNewOrder) {
+      onStartNewOrder();
+    } else {
+      window.location.reload();
+    }
   };
 
   return (

@@ -261,16 +261,16 @@ export const translations: Translations = {
     es: "Resumen del pedido",
     de: "Bestellübersicht"
   },
-  submitting: {
-    en: "Submitting...",
-    he: "שולח...",
-    ar: "جارٍ الإرسال...",
-    ru: "Отправка...",
-    yi: "שיקן...",
-    am: "በመላክ ላይ...",
-    fr: "Envoi en cours...",
-    es: "Enviando...",
-    de: "Senden..."
+  submittingOrder: {
+    en: "Submitting order...",
+    he: "שולח הזמנה...",
+    ar: "جارٍ إرسال الطلب...",
+    ru: "Отправка заказа...",
+    yi: "שיקן באשטעלונג...",
+    am: "ትዕዛዝ በመላክ ላይ...",
+    fr: "Envoi de la commande...",
+    es: "Enviando pedido...",
+    de: "Bestellung wird gesendet..."
   },
   orderError: {
     en: "There was an error submitting your order. Please try again.",
@@ -403,6 +403,61 @@ export const translations: Translations = {
     fr: 'Personnaliser',
     es: 'Personalizar',
     de: 'Anpassen'
+  },
+  quickOrder: {
+    en: 'Quick Order',
+    he: 'הזמנה מהירה',
+    ar: 'طلب سريع',
+    ru: 'Быстрый заказ',
+    yi: 'שנעל באשטעלונג',
+    am: 'ፈጣን ትዕዛዝ',
+    fr: 'Commande rapide',
+    es: 'Pedido rápido',
+    de: 'Schnellbestellung'
+  },
+  detailedOrder: {
+    en: 'Detailed Order',
+    he: 'הזמנה מפורטת',
+    ar: 'طلب مفصل',
+    ru: 'Подробный заказ',
+    yi: 'דעטיילירטע באשטעלונג',
+    am: 'ዝርዝር ትዕዛዝ',
+    fr: 'Commande détaillée',
+    es: 'Pedido detallado',
+    de: 'Detaillierte Bestellung'
+  },
+  submitOrder: {
+    en: 'Submit Order',
+    he: 'שלח הזמנה',
+    ar: 'إرسال الطلب',
+    ru: 'Отправить заказ',
+    yi: 'פאָרלייגן באשטעלונג',
+    am: 'ትዕዛዝ ላክ',
+    fr: 'Soumettre la commande',
+    es: 'Enviar pedido',
+    de: 'Bestellung absenden'
+  },
+  cancel: {
+    en: 'Cancel',
+    he: 'בטל',
+    ar: 'إلغاء',
+    ru: 'Отмена',
+    yi: 'אָפּזאָגן',
+    am: 'ሰርዝ',
+    fr: 'Annuler',
+    es: 'Cancelar',
+    de: 'Abbrechen'
+  },
+  tableNumberRequired: {
+    en: 'Table number is required',
+    he: 'נדרש מספר שולחן',
+    ar: 'رقم الطاولة مطلوب',
+    ru: 'Номер стола обязателен',
+    yi: 'טיש נומער איז פאַרלאַנגט',
+    am: 'የጠረጴዛ ቁጥር ያስፈልጋል',
+    fr: 'Le numéro de table est requis',
+    es: 'Se requiere el número de mesa',
+    de: 'Tischnummer ist erforderlich'
   }
 };
 

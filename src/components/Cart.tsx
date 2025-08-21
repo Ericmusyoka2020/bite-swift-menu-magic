@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, Minus, Plus, X, CreditCard, Trash2 } from 'lucide-react';
+import { ShoppingCart, Minus, Plus, X, CreditCard, Trash2, Send } from 'lucide-react';
+import { useForm } from '@formspree/react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Separator } from './ui/separator';
+import { Input } from './ui/input';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useCart } from '../contexts/CartContext';
 import { CheckoutForm } from './CheckoutForm';
+import { OrderSuccess } from './OrderSuccess';
 
 interface CartProps {
   isOpen: boolean;
@@ -16,8 +19,90 @@ interface CartProps {
 
 export const Cart: React.FC<CartProps> = ({ isOpen, onToggle }) => {
   const { t, language } = useLanguage();
-  const { items, updateQuantity, removeItem, total, itemCount } = useCart();
+  const { items, updateQuantity, removeItem, total, itemCount, clearCart } = useCart();
   const [showCheckout, setShowCheckout] = useState(false);
+  const [showQuickOrder, setShowQuickOrder] = useState(false);
+  const [tableNumber, setTableNumber] = useState('');
+  const [state, handleSubmit] = useForm("xgvzjrdn");
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  // Auto-fill table number from URL parameter
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const table = urlParams.get('table');
+    if (table) {
+      setTableNumber(table);
+    }
+  }, []);
+
+  const handleQuickSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!tableNumber.trim()) {
+      alert(t('tableNumberRequired'));
+      return;
+    }
+
+    const orderData = {
+      tableNumber,
+      items: items.map(cartItem => {
+        let itemPrice = cartItem.item.price;
+        let customizationText = '';
+        
+        if (cartItem.customizations && cartItem.item.customizations) {
+          cartItem.item.customizations.forEach(customization => {
+            const selectedOptionId = cartItem.customizations![customization.id];
+            if (selectedOptionId) {
+              const option = customization.options.find(opt => opt.id === selectedOptionId);
+              if (option) {
+                customizationText += ` (${customization.name[language]}: ${option.name[language]})`;
+                if (option.price) {
+                  itemPrice += option.price;
+                }
+              }
+            }
+          });
+        }
+
+        return {
+          name: `${cartItem.item.name[language]}${customizationText}`,
+          price: itemPrice,
+          quantity: cartItem.quantity,
+          total: itemPrice * cartItem.quantity
+        };
+      }),
+      total: total.toFixed(2),
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      await handleSubmit({
+        target: {
+          tableNumber: { value: tableNumber },
+          orderDetails: { value: JSON.stringify(orderData, null, 2) },
+          total: { value: total.toFixed(2) }
+        }
+      } as any);
+
+      setShowSuccess(true);
+      clearCart();
+    } catch (error) {
+      console.error('Error submitting order:', error);
+      alert(t('orderError') || 'Error submitting order');
+    }
+  };
+
+  if (showSuccess) {
+    return (
+      <div className="fixed inset-0 bg-black/50 z-50 backdrop-blur-sm flex items-center justify-center p-4">
+        <OrderSuccess onStartNewOrder={() => {
+          setShowSuccess(false);
+          setShowQuickOrder(false);
+          onToggle();
+        }} />
+      </div>
+    );
+  }
 
   if (showCheckout) {
     return <CheckoutForm onBack={() => setShowCheckout(false)} />;
@@ -175,21 +260,70 @@ export const Cart: React.FC<CartProps> = ({ isOpen, onToggle }) => {
                     
                     <div className="space-y-4 mt-6">
                       <Separator />
-                      <div className="flex justify-between items-center text-lg font-bold">
-                        <span>{t('total')}</span>
-                        <span className="text-primary">${total.toFixed(2)}</span>
-                      </div>
                       
-                      <motion.div whileTap={{ scale: 0.95 }}>
-                        <Button
-                          onClick={() => setShowCheckout(true)}
-                          className="w-full gap-2 gradient-hero text-white"
-                          size="lg"
-                        >
-                          <CreditCard className="h-4 w-4" />
-                          {t('checkout')}
-                        </Button>
-                      </motion.div>
+                      {showQuickOrder && (
+                        <form onSubmit={handleQuickSubmit} className="space-y-3">
+                          <Input
+                            placeholder={t('tableNumber')}
+                            value={tableNumber}
+                            onChange={(e) => setTableNumber(e.target.value)}
+                            required
+                            className="text-center"
+                          />
+                          <div className="flex gap-2">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              onClick={() => setShowQuickOrder(false)}
+                              className="flex-1"
+                            >
+                              {t('cancel')}
+                            </Button>
+                            <Button
+                              type="submit"
+                              disabled={state.submitting}
+                              className="flex-1 gap-2 gradient-hero text-white"
+                            >
+                              <Send className="h-4 w-4" />
+                              {state.submitting ? t('submittingOrder') : t('submitOrder')}
+                            </Button>
+                          </div>
+                        </form>
+                      )}
+                      
+                      {!showQuickOrder && (
+                        <>
+                          <div className="flex justify-between items-center text-lg font-bold">
+                            <span>{t('total')}</span>
+                            <span className="text-primary">${total.toFixed(2)}</span>
+                          </div>
+                          
+                          <div className="grid grid-cols-2 gap-2">
+                            <motion.div whileTap={{ scale: 0.95 }}>
+                              <Button
+                                onClick={() => setShowQuickOrder(true)}
+                                className="w-full gap-2 bg-green-600 hover:bg-green-700 text-white"
+                                size="lg"
+                              >
+                                <Send className="h-4 w-4" />
+                                {t('quickOrder')}
+                              </Button>
+                            </motion.div>
+                            
+                            <motion.div whileTap={{ scale: 0.95 }}>
+                              <Button
+                                onClick={() => setShowCheckout(true)}
+                                variant="outline"
+                                className="w-full gap-2"
+                                size="lg"
+                              >
+                                <CreditCard className="h-4 w-4" />
+                                {t('detailedOrder')}
+                              </Button>
+                            </motion.div>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </>
                 )}
