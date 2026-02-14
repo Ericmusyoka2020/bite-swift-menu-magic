@@ -8,7 +8,7 @@ import { ThemeToggle } from './ThemeToggle';
 import { Cart } from './Cart';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useCart } from '../contexts/CartContext';
-import logoImage from '../assets/biteswift-logo.jpg';
+const logoImage = '/biteswift-logo.jpg';
 
 export const Header: React.FC = () => {
   const { t, isRTL } = useLanguage();
